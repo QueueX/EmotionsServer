@@ -15,16 +15,16 @@ class PostEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     var id: Int? = null
 
-    @Column
+    @Column(length = 50)
     var username: String? = null
 
-    @Column
+    @Column(length = 10000)
     var text: String? = null
 
     @Column
     var label: Int? = null
 
-    @Column
+    @Column(length = 20)
     var date: String? = null
 
 }

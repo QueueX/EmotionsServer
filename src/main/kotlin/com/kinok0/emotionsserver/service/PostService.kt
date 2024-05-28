@@ -13,7 +13,9 @@ import kotlin.random.Random
 @Service
 class PostService(
     private val postRepository: PostRepository,
-    private val random: Random
+    private val random: Random,
+    private val pythonRequestSender: PythonRequestSender,
+    requestSender: PythonRequestSender
 ) {
 
     fun getAllUsers() : Any {
@@ -41,15 +43,22 @@ class PostService(
             val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
             val formattedDate = sdf.format(date)
 
-            val post = PostEntity().apply {
-                this.username = request.username
-                this.text = request.text
-                this.label = random.nextInt(6)
-                this.date = formattedDate
-            }
-            postRepository.save(post)
+            val label = pythonRequestSender.sendRequest(request.text)
 
-            return ResponseEntity(post, HttpStatus.OK)
+            if (label != -1) {
+
+                val post = PostEntity().apply {
+                    this.username = request.username
+                    this.text = request.text
+                    this.label = label
+                    this.date = formattedDate
+                }
+                postRepository.save(post)
+
+                return ResponseEntity(post, HttpStatus.OK)
+            } else {
+                return ResponseEntity("Failed to send request to Python server", HttpStatus.BAD_REQUEST)
+            }
         } catch (ex : Exception) {
             return ResponseEntity(ex, HttpStatus.BAD_REQUEST)
         }
