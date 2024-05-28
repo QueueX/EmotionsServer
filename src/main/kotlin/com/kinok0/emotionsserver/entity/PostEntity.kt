@@ -24,4 +24,7 @@ class PostEntity {
     @Column
     var label: Int? = null
 
+    @Column
+    var date: String? = null
+
 }
