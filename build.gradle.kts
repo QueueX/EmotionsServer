@@ -32,12 +32,6 @@ dependencies {
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 }
 
-tasks.withType<Jar> {
-    manifest {
-        attributes["Main-Class"] = "com.kinok0.emotionsserver.EmotionsServerApplicationKt"
-    }
-}
-
 tasks.withType<KotlinCompile> {
     kotlinOptions {
         freeCompilerArgs += "-Xjsr305=strict"
