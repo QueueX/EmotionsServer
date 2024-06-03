@@ -34,7 +34,7 @@ dependencies {
 
 tasks.withType<Jar> {
     manifest {
-        attributes["Main-Class"] = "com.kinok0.emotionsserver.EmotionsServerApplication"
+        attributes["Main-Class"] = "com.kinok0.emotionsserver.EmotionsServerApplicationKT"
     }
 }
 
