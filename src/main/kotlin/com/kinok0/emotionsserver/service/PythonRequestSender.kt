@@ -5,6 +5,7 @@ import org.springframework.http.*
 import org.springframework.stereotype.Service
 import org.springframework.web.client.HttpClientErrorException
 import org.springframework.web.client.RestTemplate
+import java.util.*
 
 @Service
 class PythonRequestSender {
@@ -14,7 +15,9 @@ class PythonRequestSender {
     fun sendRequest(text: String) : Int {
         val restTemplate = RestTemplate()
 
-        val url = "$PYTHON_SERVER_URL?text=$text"
+        val requestText = text.lowercase(Locale.getDefault())
+
+        val url = "$PYTHON_SERVER_URL?text=$requestText"
 
         try {
             val response = restTemplate.exchange(

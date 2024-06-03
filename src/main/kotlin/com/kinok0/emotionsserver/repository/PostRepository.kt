@@ -6,7 +6,5 @@ import org.springframework.stereotype.Repository
 
 @Repository
 interface PostRepository : JpaRepository<PostEntity, Int> {
-
     fun findPostEntitiesByLabel(label: Int) : MutableList<PostEntity>
-
 }

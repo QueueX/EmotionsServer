@@ -1,0 +1,11 @@
+version: '3'
+
+services:
+  emotions-kotlin-server:
+    build:
+      dockerfile: Dockerfile
+      context: .
+    image: emotions-kotlin-server
+    container_name: 'emotions-kotlin-server'
+    ports:
+      - "8080:8080"

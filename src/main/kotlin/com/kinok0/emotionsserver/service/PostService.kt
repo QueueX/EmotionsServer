@@ -8,14 +8,11 @@ import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Service
 import java.text.SimpleDateFormat
 import java.util.*
-import kotlin.random.Random
 
 @Service
 class PostService(
     private val postRepository: PostRepository,
-    private val random: Random,
-    private val pythonRequestSender: PythonRequestSender,
-    requestSender: PythonRequestSender
+    private val pythonRequestSender: PythonRequestSender
 ) {
 
     fun getAllUsers() : Any {

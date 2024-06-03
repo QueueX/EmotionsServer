@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody
 class PostController(private val postService: PostService) {
 
     @GetMapping("")
-    fun getAllPosts() = postService.getAllUsers();
+    fun getAllPosts() = postService.getAllUsers()
 
     @GetMapping("/{label}")
     fun getPostsByLabel(@PathVariable label: Int) = postService.getPostsByLabel(label)

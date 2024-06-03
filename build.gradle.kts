@@ -9,7 +9,7 @@ plugins {
 }
 
 group = "com.kinok0"
-version = "0.0.1-SNAPSHOT"
+version = "1.0"
 
 java {
     sourceCompatibility = JavaVersion.VERSION_21
@@ -30,6 +30,12 @@ dependencies {
     runtimeOnly("org.postgresql:postgresql")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
+}
+
+tasks.withType<Jar> {
+    manifest {
+        attributes["Main-Class"] = "com.kinok0.emotionsserver.EmotionsServerApplication"
+    }
 }
 
 tasks.withType<KotlinCompile> {
