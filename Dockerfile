@@ -1,4 +1,4 @@
 FROM openjdk:21
 EXPOSE 8080
-ADD ./build/libs/EmotionsServer-1.0.jar ./emotions-server.jar
-CMD ["java","-jar","emotions-server.jar"]
+COPY build/libs/EmotionsServer-1.0.jar /app/EmotionsServer.jar
+CMD ["java","-jar","/app/EmotionsServer.jar"]
