@@ -10,7 +10,7 @@ import java.util.*
 @Service
 class PythonRequestSender {
 
-    private val PYTHON_SERVER_URL = "http://python-server:5000/getLabel"
+    private val PYTHON_SERVER_URL = "python-server:5000/getLabel"
 
     fun sendRequest(text: String) : Int {
         val restTemplate = RestTemplate()
