@@ -52,7 +52,8 @@ class PostService(
                 }
                 postRepository.save(post)
 
-                return ResponseEntity(post, HttpStatus.OK)
+                val posts = postRepository.findAll().sortedByDescending { it.id }
+                return ResponseEntity(posts, HttpStatus.OK)
             } else {
                 return ResponseEntity("Failed to send request to Python server", HttpStatus.BAD_REQUEST)
             }
