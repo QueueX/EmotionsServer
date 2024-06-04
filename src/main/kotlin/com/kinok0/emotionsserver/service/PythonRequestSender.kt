@@ -10,18 +10,14 @@ import java.util.*
 @Service
 class PythonRequestSender {
 
-    private val PYTHON_SERVER_URL = "http://localhost:5000/getLabel"
+    private val PYTHON_SERVER_URL = "http://python-server:5000/getLabel"
 
     fun sendRequest(text: String) : Int {
         val restTemplate = RestTemplate()
 
         val requestText = text.lowercase(Locale.getDefault()).replace(" ", "%20")
 
-        println("\n${requestText}\n")
-
         val url = "$PYTHON_SERVER_URL?text=$requestText"
-
-        println("\n${url}\n")
 
         try {
             val response = restTemplate.exchange(
