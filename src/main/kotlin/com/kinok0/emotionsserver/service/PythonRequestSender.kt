@@ -15,7 +15,7 @@ class PythonRequestSender {
     fun sendRequest(text: String) : Int {
         val restTemplate = RestTemplate()
 
-        val requestText = text.lowercase(Locale.getDefault())
+        val requestText = text.lowercase(Locale.getDefault()).replace(" ", "%20")
 
         val url = "$PYTHON_SERVER_URL?text=$requestText"
 
