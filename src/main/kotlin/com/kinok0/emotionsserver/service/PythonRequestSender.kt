@@ -17,7 +17,11 @@ class PythonRequestSender {
 
         val requestText = text.lowercase(Locale.getDefault()).replace(" ", "%20")
 
+        println("\n${requestText}\n")
+
         val url = "$PYTHON_SERVER_URL?text=$requestText"
+
+        println("\n${url}\n")
 
         try {
             val response = restTemplate.exchange(
