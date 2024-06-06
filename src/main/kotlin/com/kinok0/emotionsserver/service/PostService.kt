@@ -62,4 +62,22 @@ class PostService(
         }
     }
 
+    fun deletePost(id: Int) : Any {
+        try {
+            postRepository.deletePostEntityById(id)
+            return ResponseEntity(mapOf("message" to "Post has been deleted!"), HttpStatus.OK)
+        } catch (ex: Exception) {
+            return ResponseEntity("Something error at Server", HttpStatus.INTERNAL_SERVER_ERROR)
+        }
+    }
+
+    fun deleteAllPosts() : Any {
+        try {
+            postRepository.deleteAll()
+            return ResponseEntity(mapOf("message" to "All posts has been deleted!"), HttpStatus.OK)
+        } catch (ex: Exception) {
+            return ResponseEntity("Something error at Server", HttpStatus.INTERNAL_SERVER_ERROR)
+        }
+    }
+
 }
