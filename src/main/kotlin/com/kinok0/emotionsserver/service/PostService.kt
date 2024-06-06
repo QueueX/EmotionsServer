@@ -3,6 +3,8 @@ package com.kinok0.emotionsserver.service
 import com.kinok0.emotionsserver.entity.PostEntity
 import com.kinok0.emotionsserver.repository.PostRepository
 import com.kinok0.emotionsserver.request.CreatePostRequest
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Service
@@ -15,27 +17,33 @@ class PostService(
     private val postRepository: PostRepository,
     private val pythonRequestSender: PythonRequestSender
 ) {
+    private val logger: Logger = LoggerFactory.getLogger(PostService::class.java)
 
     fun getAllUsers() : Any {
+        logger.info("Request to get all posts")
         try {
             val posts = postRepository.findAll().sortedByDescending { it.id }
             return ResponseEntity(posts, HttpStatus.OK)
         } catch (ex : Exception) {
+            logger.error("Error getting all users", ex.toString())
             return ResponseEntity(mapOf("error" to ex.toString()), HttpStatus.BAD_REQUEST)
         }
     }
 
     fun getPostsByLabel(label: Int) : Any {
+        logger.info("Request to get posts with label $label")
         try {
             val posts = postRepository.findPostEntitiesByLabel(label).sortedByDescending { it.id }
             return ResponseEntity(posts, HttpStatus.OK)
         } catch (ex : Exception) {
+            logger.error("Error getting posts by label: $label", ex.toString())
             return ResponseEntity(mapOf("error" to ex.toString()), HttpStatus.BAD_REQUEST)
         }
     }
 
     @Transactional
     fun createPost(request : CreatePostRequest): Any {
+        logger.info("Request to creating post")
         try {
             val currentTime = System.currentTimeMillis()
             val date = Date(currentTime)
@@ -53,33 +61,42 @@ class PostService(
                     this.date = formattedDate
                 }
                 postRepository.save(post)
+                logger.info("Post created: ${post.id}")
 
                 val posts = postRepository.findAll().sortedByDescending { it.id }
                 return ResponseEntity(posts, HttpStatus.OK)
             } else {
+                logger.error("Failed to get label from Python server")
                 return ResponseEntity(mapOf("error" to "Fail at Python server"), HttpStatus.BAD_REQUEST)
             }
         } catch (ex : Exception) {
+            logger.error("Error creating post", ex.toString())
             return ResponseEntity(mapOf("error" to ex.toString()), HttpStatus.BAD_REQUEST)
         }
     }
 
     @Transactional
     fun deletePost(id: Int) : Any {
+        logger.info("Request to delete post $id")
         try {
             postRepository.deleteById(id)
+            logger.info("Post deleted: $id")
             return ResponseEntity(mapOf("message" to "Post has been deleted!"), HttpStatus.OK)
         } catch (ex: Exception) {
+            logger.error("Error deleting post: $id", ex)
             return ResponseEntity(mapOf("error" to ex.toString()), HttpStatus.INTERNAL_SERVER_ERROR)
         }
     }
 
     @Transactional
     fun deleteAllPosts() : Any {
+        logger.info("Request to delete all posts")
         try {
             postRepository.deleteAll()
+            logger.info("All posts have been deleted")
             return ResponseEntity(mapOf("message" to "All posts has been deleted!"), HttpStatus.OK)
         } catch (ex: Exception) {
+            logger.error("Error deleting all posts", ex)
             return ResponseEntity("error" to ex.toString(), HttpStatus.INTERNAL_SERVER_ERROR)
         }
     }
