@@ -20,9 +20,10 @@ class PostService(
     private val logger: Logger = LoggerFactory.getLogger(PostService::class.java)
 
     fun getAllUsers() : Any {
-        logger.info("Request to get all posts")
+        logger.info("Request to retrieve all posts")
         try {
             val posts = postRepository.findAll().sortedByDescending { it.id }
+            logger.debug("Retrieved ${posts.size} posts")
             return ResponseEntity(posts, HttpStatus.OK)
         } catch (ex : Exception) {
             logger.error("Error getting all users", ex.toString())
@@ -31,9 +32,10 @@ class PostService(
     }
 
     fun getPostsByLabel(label: Int) : Any {
-        logger.info("Request to get posts with label $label")
+        logger.info("Request to retrieve posts with label: $label")
         try {
             val posts = postRepository.findPostEntitiesByLabel(label).sortedByDescending { it.id }
+            logger.debug("Retrieved ${posts.size} posts with label: $label")
             return ResponseEntity(posts, HttpStatus.OK)
         } catch (ex : Exception) {
             logger.error("Error getting posts by label: $label", ex.toString())
