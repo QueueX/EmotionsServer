@@ -65,8 +65,7 @@ class PostService(
                 postRepository.save(post)
                 logger.info("Post created: ${post.id}\n")
 
-                val posts = postRepository.findAll().sortedByDescending { it.id }
-                return ResponseEntity(posts, HttpStatus.OK)
+                return ResponseEntity(post, HttpStatus.OK)
             } else {
                 logger.error("Failed to get label from Python server\n")
                 return ResponseEntity(mapOf("error" to "Fail at Python server"), HttpStatus.BAD_REQUEST)
