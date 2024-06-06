@@ -6,6 +6,7 @@ import com.kinok0.emotionsserver.request.CreatePostRequest
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -33,6 +34,7 @@ class PostService(
         }
     }
 
+    @Transactional
     fun createPost(request : CreatePostRequest): Any {
         try {
             val currentTime = System.currentTimeMillis()
@@ -62,15 +64,17 @@ class PostService(
         }
     }
 
+    @Transactional
     fun deletePost(id: Int) : Any {
         try {
-            postRepository.deletePostEntityById(id)
+            postRepository.deleteById(id)
             return ResponseEntity(mapOf("message" to "Post has been deleted!"), HttpStatus.OK)
         } catch (ex: Exception) {
             return ResponseEntity(mapOf("error" to ex.toString()), HttpStatus.INTERNAL_SERVER_ERROR)
         }
     }
 
+    @Transactional
     fun deleteAllPosts() : Any {
         try {
             postRepository.deleteAll()
