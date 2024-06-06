@@ -20,7 +20,7 @@ class PostService(
             val posts = postRepository.findAll().sortedByDescending { it.id }
             return ResponseEntity(posts, HttpStatus.OK)
         } catch (ex : Exception) {
-            return ResponseEntity(ex, HttpStatus.BAD_REQUEST)
+            return ResponseEntity(mapOf("error" to ex.toString()), HttpStatus.BAD_REQUEST)
         }
     }
 
@@ -29,7 +29,7 @@ class PostService(
             val posts = postRepository.findPostEntitiesByLabel(label).sortedByDescending { it.id }
             return ResponseEntity(posts, HttpStatus.OK)
         } catch (ex : Exception) {
-            return ResponseEntity(ex, HttpStatus.BAD_REQUEST)
+            return ResponseEntity(mapOf("error" to ex.toString()), HttpStatus.BAD_REQUEST)
         }
     }
 
@@ -55,10 +55,10 @@ class PostService(
                 val posts = postRepository.findAll().sortedByDescending { it.id }
                 return ResponseEntity(posts, HttpStatus.OK)
             } else {
-                return ResponseEntity("Failed to send request to Python server", HttpStatus.BAD_REQUEST)
+                return ResponseEntity(mapOf("error" to "Fail at Python server"), HttpStatus.BAD_REQUEST)
             }
         } catch (ex : Exception) {
-            return ResponseEntity(ex, HttpStatus.BAD_REQUEST)
+            return ResponseEntity(mapOf("error" to ex.toString()), HttpStatus.BAD_REQUEST)
         }
     }
 
@@ -67,7 +67,7 @@ class PostService(
             postRepository.deletePostEntityById(id)
             return ResponseEntity(mapOf("message" to "Post has been deleted!"), HttpStatus.OK)
         } catch (ex: Exception) {
-            return ResponseEntity("Something error at Server", HttpStatus.INTERNAL_SERVER_ERROR)
+            return ResponseEntity(mapOf("error" to ex.toString()), HttpStatus.INTERNAL_SERVER_ERROR)
         }
     }
 
@@ -76,7 +76,7 @@ class PostService(
             postRepository.deleteAll()
             return ResponseEntity(mapOf("message" to "All posts has been deleted!"), HttpStatus.OK)
         } catch (ex: Exception) {
-            return ResponseEntity("Something error at Server", HttpStatus.INTERNAL_SERVER_ERROR)
+            return ResponseEntity("error" to ex.toString(), HttpStatus.INTERNAL_SERVER_ERROR)
         }
     }
 
