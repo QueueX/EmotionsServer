@@ -23,10 +23,10 @@ class PostService(
         logger.info("Request to retrieve all posts")
         try {
             val posts = postRepository.findAll().sortedByDescending { it.id }
-            logger.debug("Retrieved ${posts.size} posts")
+            logger.debug("Retrieved ${posts.size} posts\n")
             return ResponseEntity(posts, HttpStatus.OK)
         } catch (ex : Exception) {
-            logger.error("Error getting all users", ex.toString())
+            logger.error("Error getting all users: $ex\n")
             return ResponseEntity(mapOf("error" to ex.toString()), HttpStatus.BAD_REQUEST)
         }
     }
@@ -35,10 +35,10 @@ class PostService(
         logger.info("Request to retrieve posts with label: $label")
         try {
             val posts = postRepository.findPostEntitiesByLabel(label).sortedByDescending { it.id }
-            logger.debug("Retrieved ${posts.size} posts with label: $label")
+            logger.debug("Retrieved ${posts.size} posts with label: $label\n")
             return ResponseEntity(posts, HttpStatus.OK)
         } catch (ex : Exception) {
-            logger.error("Error getting posts by label: $label", ex.toString())
+            logger.error("Error getting posts by label $label: $ex\n")
             return ResponseEntity(mapOf("error" to ex.toString()), HttpStatus.BAD_REQUEST)
         }
     }
@@ -63,16 +63,16 @@ class PostService(
                     this.date = formattedDate
                 }
                 postRepository.save(post)
-                logger.info("Post created: ${post.id}")
+                logger.info("Post created: ${post.id}\n")
 
                 val posts = postRepository.findAll().sortedByDescending { it.id }
                 return ResponseEntity(posts, HttpStatus.OK)
             } else {
-                logger.error("Failed to get label from Python server")
+                logger.error("Failed to get label from Python server\n")
                 return ResponseEntity(mapOf("error" to "Fail at Python server"), HttpStatus.BAD_REQUEST)
             }
         } catch (ex : Exception) {
-            logger.error("Error creating post", ex.toString())
+            logger.error("Error creating post: $ex\n")
             return ResponseEntity(mapOf("error" to ex.toString()), HttpStatus.BAD_REQUEST)
         }
     }
@@ -82,10 +82,10 @@ class PostService(
         logger.info("Request to delete post $id")
         try {
             postRepository.deleteById(id)
-            logger.info("Post deleted: $id")
+            logger.info("Post deleted: $id\n")
             return ResponseEntity(mapOf("message" to "Post has been deleted!"), HttpStatus.OK)
         } catch (ex: Exception) {
-            logger.error("Error deleting post: $id", ex)
+            logger.error("Error deleting post $id: $ex\n")
             return ResponseEntity(mapOf("error" to ex.toString()), HttpStatus.INTERNAL_SERVER_ERROR)
         }
     }
@@ -95,10 +95,10 @@ class PostService(
         logger.info("Request to delete all posts")
         try {
             postRepository.deleteAll()
-            logger.info("All posts have been deleted")
+            logger.info("All posts have been deleted\n")
             return ResponseEntity(mapOf("message" to "All posts has been deleted!"), HttpStatus.OK)
         } catch (ex: Exception) {
-            logger.error("Error deleting all posts", ex)
+            logger.error("Error deleting all posts: $ex\n")
             return ResponseEntity("error" to ex.toString(), HttpStatus.INTERNAL_SERVER_ERROR)
         }
     }
