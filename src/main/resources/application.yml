@@ -6,8 +6,8 @@ spring:
       ddl-auto: update
   datasource:
     url: jdbc:postgresql://${DATABASE_HOST:localhost}:5432/EmotionsForum
-    username: postgres
-    password: postgres
+    username: Kinok0
+    password: KinKin9015239802098580912faswasdasjrnnc
     driver-class-name: org.postgresql.Driver
 server:
   port: 8080

@@ -24,8 +24,8 @@ services:
       - emotion
     environment:
       POSTGRES_DB: "EmotionsForum"
-      POSTGRES_USER: "postgres"
-      POSTGRES_PASSWORD: "postgres"
+      POSTGRES_USER: "Kinok0"
+      POSTGRES_PASSWORD: "KinKin9015239802098580912faswasdasjrnnc"
     ports:
       - "5432:5432"
 
